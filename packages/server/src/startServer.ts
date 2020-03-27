@@ -13,7 +13,7 @@ import { genSchema } from "./utils/genSchema";
 import { redisSessionPrefix } from "./constants";
 import { createTestConn } from "./testUtils/createTestConn";
 
-const SESSION_SECRET = "ajslkjalksjdfkl";
+const SESSION_SECRET = "Reactnative@2018";
 const RedisStore = connectRedis(session as any);
 
 export const startServer = async () => {
@@ -59,6 +59,8 @@ export const startServer = async () => {
       }
     } as any)
   );
+
+  console.log(process.env.FRONTEND_HOST as string);
 
   const cors = {
     credentials: true,

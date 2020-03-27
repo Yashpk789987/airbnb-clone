@@ -6,7 +6,7 @@ import { User } from "../../../entity/User";
 import { TestClient } from "../../../utils/TestClient";
 import { createForgotPasswordLink } from "../../../utils/createForgotPasswordLink";
 import { forgotPasswordLockAccount } from "../../../utils/forgotPasswordLockAccount";
-import { passwordNotLongEnough } from "../register/errorMessages";
+import { passwordNotLongEnough } from "@airbnb/common";
 import { expiredKeyError } from "./errorMessages";
 import { forgotPasswordLockedError } from "../login/errorMessages";
 import { createTestConn } from "../../../testUtils/createTestConn";
