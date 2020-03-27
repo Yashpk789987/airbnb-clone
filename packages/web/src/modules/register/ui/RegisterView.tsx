@@ -1,8 +1,11 @@
-import React from "react";
-import { Form, Icon, Input, Button } from "antd";
-import { withFormik, FormikErrors, FormikProps } from "formik";
-
+import * as React from "react";
+import * as Antd from "antd";
+import { withFormik, FormikErrors, FormikProps, Field, Form } from "formik";
 import { userValidationSchema } from "@airbnb/common";
+import { InputField } from "../../shared/InputField";
+
+const { Form: AntForm, Icon, Button } = Antd;
+const FormItem = AntForm.Item;
 
 interface FormValues {
   email: string;
@@ -15,52 +18,36 @@ interface Props {
 
 class C extends React.PureComponent<FormikProps<FormValues> & Props> {
   render() {
-    const {
-      handleChange,
-      handleBlur,
-      handleSubmit,
-      values,
-      touched,
-      errors
-    } = this.props;
     return (
-      <form style={{ display: "flex" }} onSubmit={handleSubmit}>
+      <Form style={{ display: "flex" }}>
         <div style={{ width: 400, margin: "auto" }}>
-          <Form.Item
-            validateStatus={touched.email && errors.email ? "error" : undefined}
-            help={touched.email && errors.email ? errors.email : ""}
-          >
-            <Input
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="Email"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </Form.Item>
-          <Form.Item
-            help={touched.password && errors.password ? errors.password : ""}
-            validateStatus={
-              touched.password && errors.password ? "error" : undefined
+          <Field
+            name="email"
+            // tslint:disable-next-line:jsx-no-multiline-js
+            prefix={
+              (<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />) as any
+              // tslint:disable-next-line:jsx-curly-spacing
             }
-          >
-            <Input
-              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-              type="password"
-              name="password"
-              value={values.password}
-              placeholder="Password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </Form.Item>
-          <Form.Item>
+            placeholder="Email"
+            component={InputField}
+          />
+          <Field
+            name="password"
+            type="password"
+            // tslint:disable-next-line:jsx-no-multiline-js
+            prefix={
+              (<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />) as any
+              // tslint:disable-next-line:jsx-curly-spacing
+            }
+            placeholder="Password"
+            component={InputField}
+          />
+          <FormItem>
             <a className="login-form-forgot" href="">
               Forgot password
             </a>
-          </Form.Item>
-          <Form.Item>
+          </FormItem>
+          <FormItem>
             <Button
               type="primary"
               htmlType="submit"
@@ -68,20 +55,18 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
             >
               Register
             </Button>
-          </Form.Item>
-          <Form.Item>
+          </FormItem>
+          <FormItem>
             Or <a href="">login now!</a>
-          </Form.Item>
+          </FormItem>
         </div>
-      </form>
+      </Form>
     );
   }
 }
 
 export const RegisterView = withFormik<Props, FormValues>({
   validationSchema: userValidationSchema,
-  validateOnChange: false,
-  validateOnBlur: false,
   mapPropsToValues: () => ({ email: "", password: "" }),
   handleSubmit: async (values, { props, setErrors }) => {
     const errors = await props.submit(values);
