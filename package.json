@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "build:server": "lerna run build --scope={@airbnb/common,@airbnb/server}"
+    "build:server": "lerna run build --scope={@airbnb/common,@airbnb/server}",
+    "build:web": "lerna run build --scope={@airbnb/common,@airbnb/web}"
   },
   "workspaces": {
     "packages": [
