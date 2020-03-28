@@ -1,7 +1,6 @@
 import * as React from "react";
 import { graphql, ChildMutateProps } from "react-apollo";
 import gql from "graphql-tag";
-
 import {
   RegisterMutation,
   RegisterMutationVariables
@@ -17,10 +16,10 @@ class C extends React.PureComponent<
   ChildMutateProps<Props, RegisterMutation, RegisterMutationVariables>
 > {
   submit = async (values: RegisterMutationVariables) => {
+    console.log(values);
     const response = await this.props.mutate({
       variables: values
     });
-
     console.log("response: ", response);
     return null;
   };
