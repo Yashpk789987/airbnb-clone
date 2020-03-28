@@ -1,5 +1,8 @@
 {
   "private": true,
+  "scripts": {
+    "build:server": "lerna run build --scope={@airbnb/common,@airbnb/server}"
+  },
   "workspaces": {
     "packages": [
       "packages/*"
@@ -8,5 +11,9 @@
       "**/rimraf",
       "**/rimraf/**"
     ]
+  },
+  "name": "airbnb",
+  "devDependencies": {
+    "lerna": "^3.20.2"
   }
 }
