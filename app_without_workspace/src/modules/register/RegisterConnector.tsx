@@ -1,34 +1,14 @@
 import * as React from "react";
-import { StyleSheet, Platform, StatusBar, View } from "react-native";
-import { Button } from "react-native-elements";
+
+import { RegisterView } from "./ui/RegisterView";
 
 export class RegisterConnector extends React.PureComponent {
-  onPress = () => {
-    console.log("button pressed");
+  dummySubmit = async (values: any) => {
+    console.log(values);
+    return null;
   };
 
   render() {
-    return (
-      <View style={styles.androidHeader}>
-        <Button title="BUTTON" onPress={this.onPress} />
-      </View>
-    );
+    return <RegisterView submit={this.dummySubmit} />;
   }
 }
-
-const styles = StyleSheet.create({
-  androidHeader: {
-    ...Platform.select({
-      android: {
-        marginTop: StatusBar.currentHeight
-      }
-    })
-  },
-  androidHeaderTitle: {
-    ...Platform.select({
-      android: {
-        alignItems: "flex-end"
-      }
-    })
-  }
-});

@@ -13,6 +13,7 @@
     "apollo-client": "^2.3.5",
     "apollo-link-http": "^1.5.4",
     "expo": "~36.0.0",
+    "formik": "0.11.11",
     "graphql": "0.13.2",
     "graphql-tag": "^2.9.2",
     "react": "~16.9.0",
