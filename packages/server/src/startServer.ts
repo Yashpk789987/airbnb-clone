@@ -60,11 +60,12 @@ export const startServer = async () => {
     } as any)
   );
 
-  console.log(process.env.FRONTEND_HOST as string);
-
   const cors = {
     credentials: true,
-    origin: process.env.NODE_ENV === "test" ? "*" : "*"
+    origin:
+      process.env.NODE_ENV === "test"
+        ? "*"
+        : (process.env.FRONTEND_HOST as string)
   };
 
   server.express.get("/confirm/:id", confirmEmail);
