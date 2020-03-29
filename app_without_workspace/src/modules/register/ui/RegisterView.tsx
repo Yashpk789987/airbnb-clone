@@ -1,9 +1,16 @@
 import * as React from "react";
 
-import { View, Button, StyleSheet, Platform, StatusBar } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Platform,
+  StatusBar,
+  KeyboardAvoidingView
+} from "react-native";
 import { withFormik, FormikErrors, FormikProps, Field } from "formik";
 import { userValidationSchema } from "@airbnb/common";
 import { InputField } from "../../shared/InputField";
+import { Button, Card, Text } from "react-native-elements";
 
 interface FormValues {
   email: string;
@@ -18,16 +25,30 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
   render() {
     const { handleSubmit } = this.props;
     return (
-      <View style={[styles.androidHeader, { width: 400, margin: "auto" }]}>
-        <Field name="email" placeholder="Email" component={InputField} />
-        <Field
-          name="password"
-          secureTextEntry={true}
-          placeholder="Password"
-          component={InputField}
-        />
-        <Button title="Register" onPress={handleSubmit as any} />
-      </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1, justifyContent: "center" }}
+      >
+        <Card>
+          <Text style={{ fontSize: 30, marginBottom: 10 }}>Register</Text>
+          <Field
+            containerStyle={{ width: "102%" }}
+            name="email"
+            placeholder="Email"
+            component={InputField}
+          />
+          <Field
+            containerStyle={{ width: "102%" }}
+            name="password"
+            secureTextEntry={true}
+            placeholder="Password"
+            component={InputField}
+          />
+          <View style={{ marginTop: 30 }}>
+            <Button title="Register" onPress={handleSubmit as any} />
+          </View>
+        </Card>
+      </KeyboardAvoidingView>
     );
   }
 }

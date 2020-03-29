@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@airbnb/common": "file:../packages/common",
+    "@airbnb/controller": "file:../packages/controller",
     "apollo-cache-inmemory": "^1.2.5",
     "apollo-client": "^2.3.5",
     "apollo-link-http": "^1.5.4",
