@@ -10,13 +10,7 @@
     ],
     "nohoist": [
       "**/rimraf",
-      "**/rimraf/**",
-      "**/expo",
-      "**/expo/**",
-      "**/react-native-typescript-transformer",
-      "**/react-native-typescript-transformer/**",
-      "**/metro-bundler-config-yarn-workspaces",
-      "**/metro-bundler-config-yarn-workspaces/**"
+      "**/rimraf/**"
     ]
   },
   "name": "airbnb",
