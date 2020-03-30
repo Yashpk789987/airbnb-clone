@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Form as AntForm, Button, Icon } from "antd";
-import { withFormik, FormikErrors, FormikProps, Field, Form } from "formik";
-import { userValidationSchema } from "@airbnb/common";
+import { withFormik, FormikProps, Field, Form } from "formik";
+import { LoginSchema } from "@airbnb/common";
 import { InputField } from "../../shared/InputField";
 import { Link } from "react-router-dom";
 
@@ -13,7 +13,11 @@ interface FormValues {
 }
 
 interface Props {
-  submit: (values: FormValues) => Promise<FormikErrors<FormValues> | null>;
+  submit: (
+    values: FormValues
+  ) => Promise<{
+    [key: string]: string;
+  } | null>;
 }
 
 class C extends React.PureComponent<FormikProps<FormValues> & Props> {
@@ -49,11 +53,11 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
               htmlType="submit"
               className="login-form-button"
             >
-              Register
+              Login
             </Button>
           </FormItem>
           <FormItem>
-            Or <Link to="/login">login now!</Link>
+            Or <Link to="/register">register</Link>
           </FormItem>
         </div>
       </Form>
@@ -61,8 +65,10 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
   }
 }
 
-export const RegisterView = withFormik<Props, FormValues>({
-  validationSchema: userValidationSchema,
+export const LoginView = withFormik<Props, FormValues>({
+  validationSchema: LoginSchema,
+  validateOnBlur: false,
+  validateOnChange: false,
   mapPropsToValues: () => ({ email: "", password: "" }),
   handleSubmit: async (values, { props, setErrors }) => {
     const errors = await props.submit(values);
