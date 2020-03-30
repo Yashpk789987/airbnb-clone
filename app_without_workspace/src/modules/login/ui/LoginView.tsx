@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, Platform, KeyboardAvoidingView } from "react-native";
 import { withFormik, FormikErrors, FormikProps, Field } from "formik";
-import { userValidationSchema } from "@airbnb/common";
+import { LoginSchema } from "@airbnb/common";
 import { InputField } from "../../shared/InputField";
 import { Button, Card, Text } from "react-native-elements";
 
@@ -23,7 +23,7 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
         style={{ flex: 1, justifyContent: "center" }}
       >
         <Card>
-          <Text style={{ fontSize: 30, marginBottom: 10 }}>Register</Text>
+          <Text style={{ fontSize: 30, marginBottom: 10 }}>Login</Text>
           <Field
             containerStyle={{ width: "102%" }}
             name="email"
@@ -46,8 +46,8 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
   }
 }
 
-export const RegisterView = withFormik<Props, FormValues>({
-  validationSchema: userValidationSchema,
+export const LoginView = withFormik<Props, FormValues>({
+  validationSchema: LoginSchema,
   mapPropsToValues: () => ({ email: "", password: "" }),
   handleSubmit: async (values, { props, setErrors }) => {
     const errors = await props.submit(values);
