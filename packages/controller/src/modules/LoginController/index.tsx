@@ -6,15 +6,14 @@ import {
   LoginMutationVariables
 } from "./__generated__/LoginMutation";
 import { normalizeErrors } from "../../utils/normalizeErrors";
+import { NormalizedErrorMap } from "../../types/NormalizedErrorMap";
 
 interface Props {
   onSessionId?: (sessionId: string) => void;
   children: (data: {
     submit: (
       values: LoginMutationVariables
-    ) => Promise<{
-      [key: string]: string;
-    } | null>;
+    ) => Promise<NormalizedErrorMap | null>;
   }) => JSX.Element | null;
 }
 
