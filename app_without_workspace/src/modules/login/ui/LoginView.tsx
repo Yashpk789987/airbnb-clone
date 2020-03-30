@@ -48,6 +48,8 @@ class C extends React.PureComponent<FormikProps<FormValues> & Props> {
 
 export const LoginView = withFormik<Props, FormValues>({
   validationSchema: LoginSchema,
+  validateOnBlur: false,
+  validateOnChange: false,
   mapPropsToValues: () => ({ email: "", password: "" }),
   handleSubmit: async (values, { props, setErrors }) => {
     const errors = await props.submit(values);
