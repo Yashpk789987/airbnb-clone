@@ -1,0 +1,1 @@
+npx ts-node ../../node_modules/typeorm/cli.js migration:generate -n Migration -c  development

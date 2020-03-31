@@ -1,10 +1,17 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  ManyToOne
+} from "typeorm";
+import { User } from "./User";
 
 @Entity("listings")
 export class Listing extends BaseEntity {
   @PrimaryGeneratedColumn("uuid") id: string;
 
-  @Column("varchar", { length: 255 })
+  @Column("varchar", { length: 100 })
   name: string;
 
   @Column("text") pictureUrl: string;
@@ -12,15 +19,19 @@ export class Listing extends BaseEntity {
   @Column("varchar", { length: 255 })
   description: string;
 
-  @Column("int") price: number;
-
   @Column("int") beds: number;
 
   @Column("int") guests: number;
 
-  @Column("double precison") latitude: number;
+  @Column("double precision") latitude: number;
 
-  @Column("double precison") longitude: number;
+  @Column("double precision") longitude: number;
 
-  @Column("text", { array: true }) amenities: string;
+  @Column("text", { array: true }) amenities: string[];
+
+  @ManyToOne(
+    () => User,
+    user => user.listings
+  )
+  user: User;
 }
