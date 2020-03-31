@@ -6,6 +6,9 @@ import { ChangePasswordController } from "@airbnb/controller";
 export class ChangePasswordConnector extends Component<
   RouteComponentProps<{ key: string }>
 > {
+  onFinish = () => {
+    this.props.history.push("/login");
+  };
   render() {
     const {
       match: {
@@ -16,8 +19,9 @@ export class ChangePasswordConnector extends Component<
       <ChangePasswordController>
         {({ submit }: any) => (
           <ChangePasswordView
-            // tslint:disable-next-line:jsx-no-lambda
-            submit={({ newPassword }) => submit({ key, newPassword })}
+            onFinish={this.onFinish}
+            token={key}
+            submit={submit}
           />
         )}
       </ChangePasswordController>

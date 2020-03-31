@@ -21,16 +21,8 @@ export const resolvers: ResolverMap = {
       const user = await User.findOne({ where: { email } });
       if (!user) {
         return { ok: true };
-        // return [
-        //   {
-        //     path: "email",
-        //     message: userNotFoundError
-        //   }
-        // ];
       }
 
-      // await forgotPasswordLockAccount(user.id, redis);
-      // @todo add frontend url
       const url = await createForgotPasswordLink(
         process.env.FRONTEND_HOST as string,
         user.id,
