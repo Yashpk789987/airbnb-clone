@@ -1,10 +1,13 @@
-import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import * as React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { AuthRoute } from "@airbnb/controller";
+
 import { RegisterConnector } from "../modules/register/RegisterConnector";
 import { LoginConnector } from "../modules/login/LoginConnector";
 import { ForgotPasswordConnector } from "../modules/forgotpassword/ForgotPasswordConnector";
 import { ChangePasswordConnector } from "../modules/changePassword/ChangePasswordConnector";
 import { TextPage } from "../modules/TextPage";
+import { CreateListingConnector } from "../modules/listing/create/CreateListingConnector";
 
 export const Routes = () => (
   <BrowserRouter>
@@ -22,6 +25,9 @@ export const Routes = () => (
         component={ChangePasswordConnector}
       />
       <Route path="/m" component={TextPage} />
+      <AuthRoute
+        {...{ path: "/create-listing", component: CreateListingConnector }}
+      />
     </Switch>
   </BrowserRouter>
 );
