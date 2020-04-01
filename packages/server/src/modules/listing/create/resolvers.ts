@@ -5,6 +5,10 @@ export const resolvers: ResolverMap = {
   Mutation: {
     createListing: async (_, { input }, { session }) => {
       console.log(session);
+      if (!session.userId) {
+        // user is not logged in
+        throw new Error("Not Authenticated");
+      }
       await Listing.create({
         ...input,
         pictureUrl: "",
