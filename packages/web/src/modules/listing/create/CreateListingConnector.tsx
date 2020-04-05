@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import * as React from "react";
+import { RouteComponentProps } from "react-router-dom";
 import { Form as AntForm, Button } from "antd";
-import { Formik } from "formik";
+import { Form, Formik, FormikActions } from "formik";
 import { Page1 } from "./ui/Page1";
 import { Page2 } from "./ui/Page2";
 import { Page3 } from "./ui/Page3";
-import { RouteComponentProps } from "react-router-dom";
+import { withCreateListing, NewPropsCreateListing } from "@airbnb/controller";
 
 const FormItem = AntForm.Item;
 
@@ -24,19 +25,27 @@ interface State {
   page: number;
 }
 
-const pages = [<Page1 key="1" />, <Page2 key="2" />, <Page3 key="3" />];
+// tslint:disable-next-line:jsx-key
+const pages = [<Page1 />, <Page2 />, <Page3 />];
 
-export class CreateListingConnector extends Component<
-  RouteComponentProps<{}>,
+class C extends React.PureComponent<
+  RouteComponentProps<{}> & NewPropsCreateListing,
   State
 > {
   state = {
     page: 0
   };
-  onSubmit = (values: any) => {
-    console.log("values ::", values);
+
+  submit = async (
+    values: FormValues,
+    { setSubmitting }: FormikActions<FormValues>
+  ) => {
+    await this.props.createListing(values);
+    setSubmitting(false);
   };
+
   nextPage = () => this.setState(state => ({ page: state.page + 1 }));
+
   render() {
     return (
       <Formik<{}, FormValues>
@@ -51,25 +60,42 @@ export class CreateListingConnector extends Component<
           longitude: 0,
           amenities: []
         }}
-        onSubmit={this.onSubmit}
+        onSubmit={this.submit}
       >
-        {() => (
-          <div style={{ width: 400, margin: "auto" }}>
-            {pages[this.state.page]}
-            <FormItem>
-              {this.state.page === pages.length - 1 ? (
-                <Button type="primary" htmlType="submit">
-                  create listing
-                </Button>
-              ) : (
-                <Button onClick={this.nextPage} type="primary">
-                  next page
-                </Button>
-              )}
-            </FormItem>
-          </div>
+        {({ isSubmitting }) => (
+          <Form style={{ display: "flex" }}>
+            <div style={{ width: 400, margin: "auto" }}>
+              {pages[this.state.page]}
+              <FormItem>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end"
+                  }}
+                >
+                  {this.state.page === pages.length - 1 ? (
+                    <div>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? "submitting..." : "create listing"}
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button type="primary" onClick={this.nextPage}>
+                      next page
+                    </Button>
+                  )}
+                </div>
+              </FormItem>
+            </div>
+          </Form>
         )}
       </Formik>
     );
   }
 }
+
+export const CreateListingConnector = withCreateListing(C);
