@@ -8,6 +8,7 @@ import {
 
 export const createListingMutation = gql`
   mutation CreateListingMutation(
+    $picture: Upload
     $name: String!
     $category: String!
     $description: String!
@@ -20,6 +21,7 @@ export const createListingMutation = gql`
   ) {
     createListing(
       input: {
+        picture: $picture
         name: $name
         category: $category
         description: $description

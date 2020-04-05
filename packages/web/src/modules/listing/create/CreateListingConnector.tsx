@@ -2,14 +2,17 @@ import * as React from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { Form as AntForm, Button } from "antd";
 import { Form, Formik, FormikActions } from "formik";
+import { ImageFile } from "react-dropzone";
+import { withCreateListing, NewPropsCreateListing } from "@airbnb/controller";
+
 import { Page1 } from "./ui/Page1";
 import { Page2 } from "./ui/Page2";
 import { Page3 } from "./ui/Page3";
-import { withCreateListing, NewPropsCreateListing } from "@airbnb/controller";
 
 const FormItem = AntForm.Item;
 
 interface FormValues {
+  picture: ImageFile | null;
   name: string;
   category: string;
   description: string;
@@ -50,6 +53,7 @@ class C extends React.PureComponent<
     return (
       <Formik<{}, FormValues>
         initialValues={{
+          picture: null,
           name: "",
           category: "",
           description: "",
@@ -62,37 +66,41 @@ class C extends React.PureComponent<
         }}
         onSubmit={this.submit}
       >
-        {({ isSubmitting }) => (
-          <Form style={{ display: "flex" }}>
-            <div style={{ width: 400, margin: "auto" }}>
-              {pages[this.state.page]}
-              <FormItem>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end"
-                  }}
-                >
-                  {this.state.page === pages.length - 1 ? (
-                    <div>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting ? "submitting..." : "create listing"}
+        {({ isSubmitting, values }) => {
+          console.log(values);
+          return (
+            <Form style={{ display: "flex" }}>
+              <div style={{ width: 400, margin: "auto" }}>
+                {pages[this.state.page]}
+                {/* {values.picture && <img src={values.picture.preview} />} */}
+                <FormItem>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end"
+                    }}
+                  >
+                    {this.state.page === pages.length - 1 ? (
+                      <div>
+                        <Button
+                          type="primary"
+                          htmlType="submit"
+                          disabled={isSubmitting}
+                        >
+                          {isSubmitting ? "submitting..." : "create listing"}
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button type="primary" onClick={this.nextPage}>
+                        next page
                       </Button>
-                    </div>
-                  ) : (
-                    <Button type="primary" onClick={this.nextPage}>
-                      next page
-                    </Button>
-                  )}
-                </div>
-              </FormItem>
-            </div>
-          </Form>
-        )}
+                    )}
+                  </div>
+                </FormItem>
+              </div>
+            </Form>
+          );
+        }}
       </Formik>
     );
   }

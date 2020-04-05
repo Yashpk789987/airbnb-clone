@@ -1,6 +1,6 @@
 import * as React from "react";
 import { FieldProps } from "formik";
-import { Form, Input, InputNumber, Select } from "antd";
+import { Form, Select } from "antd";
 
 const FormItem = Form.Item;
 
