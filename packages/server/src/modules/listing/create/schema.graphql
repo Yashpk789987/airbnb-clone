@@ -1,4 +1,7 @@
+scalar Upload
+
 input CreateListingInput {
+  picture: Upload
   name: String!
   category: String!
   description: String!

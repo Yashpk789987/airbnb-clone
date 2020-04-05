@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { Form as AntForm, Button } from "antd";
 import { Form, Formik, FormikActions } from "formik";
 import { ImageFile } from "react-dropzone";
-import { withCreateListing, NewPropsCreateListing } from "@airbnb/controller";
+import { withCreateListing, WithCreateListing } from "@airbnb/controller";
 
 import { Page1 } from "./ui/Page1";
 import { Page2 } from "./ui/Page2";
@@ -32,7 +32,7 @@ interface State {
 const pages = [<Page1 />, <Page2 />, <Page3 />];
 
 class C extends React.PureComponent<
-  RouteComponentProps<{}> & NewPropsCreateListing,
+  RouteComponentProps<{}> & WithCreateListing,
   State
 > {
   state = {
