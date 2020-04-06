@@ -5,7 +5,9 @@ import * as session from "express-session";
 import * as connectRedis from "connect-redis";
 import * as RateLimit from "express-rate-limit";
 import * as RateLimitRedisStore from "rate-limit-redis";
+import * as express from "express";
 
+import { userLoader } from "./loaders/UserLoader";
 import { redis } from "./redis";
 import { createTypeormConn } from "./utils/createTypeormConn";
 import { confirmEmail } from "./routes/confirmEmail";
@@ -14,7 +16,6 @@ import { redisSessionPrefix } from "./constants";
 import { createTestConn } from "./testUtils/createTestConn";
 import { applyMiddleware } from "graphql-middleware";
 import { middleware } from "./middleware";
-import * as express from "express";
 
 const SESSION_SECRET = "Reactnative@2018";
 const RedisStore = connectRedis(session as any);
@@ -34,6 +35,7 @@ export const startServer = async () => {
       url: request.protocol + "://" + request.get("host"),
       session: request.session,
       req: request,
+      userLoader: userLoader(),
     }),
   });
 
