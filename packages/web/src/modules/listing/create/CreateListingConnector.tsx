@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, Link } from "react-router-dom";
 import { Form as AntForm, Button } from "antd";
 import { Form, Formik, FormikActions } from "formik";
 import { ImageFile } from "react-dropzone";
@@ -36,7 +36,7 @@ class C extends React.PureComponent<
   State
 > {
   state = {
-    page: 0
+    page: 0,
   };
 
   submit = async (
@@ -47,7 +47,7 @@ class C extends React.PureComponent<
     setSubmitting(false);
   };
 
-  nextPage = () => this.setState(state => ({ page: state.page + 1 }));
+  nextPage = () => this.setState((state) => ({ page: state.page + 1 }));
 
   render() {
     return (
@@ -62,7 +62,7 @@ class C extends React.PureComponent<
           guests: 0,
           latitude: 0,
           longitude: 0,
-          amenities: []
+          amenities: [],
         }}
         onSubmit={this.submit}
       >
@@ -70,6 +70,7 @@ class C extends React.PureComponent<
           console.log(values);
           return (
             <Form style={{ display: "flex" }}>
+              <Link to="/logout">Logout</Link>
               <div style={{ width: 400, margin: "auto" }}>
                 {pages[this.state.page]}
                 {/* {values.picture && <img src={values.picture.preview} />} */}
@@ -77,7 +78,7 @@ class C extends React.PureComponent<
                   <div
                     style={{
                       display: "flex",
-                      justifyContent: "flex-end"
+                      justifyContent: "flex-end",
                     }}
                   >
                     {this.state.page === pages.length - 1 ? (

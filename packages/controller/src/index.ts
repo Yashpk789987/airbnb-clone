@@ -5,6 +5,7 @@ export * from "./modules/ChangePasswordController";
 export * from "./modules/auth/AuthRoute";
 export * from "./modules/CreateListing";
 export * from "./modules/FindListings";
+export * from "./modules/LogoutController";
 export * from "./modules/RegisterController/__generated__/RegisterMutation";
 export * from "./modules/LoginController/__generated__/LoginMutation";
 export * from "./modules/ForgotPasswordController/__generated__/SendForgotPasswordEmailMutation";
@@ -12,4 +13,5 @@ export * from "./modules/ChangePasswordController/__generated__/ForgotPasswordCh
 export * from "./modules/auth/__generated__/MeQuery";
 export * from "./modules/CreateListing/__generated__/CreateListingMutation";
 export * from "./modules/FindListings/__generated__/FindListingsQuery";
+export * from "./modules/LogoutController/__generated__/LogoutMutation";
 export * from "./types/NormalizedErrorMap";
