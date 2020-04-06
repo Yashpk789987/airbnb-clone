@@ -17,10 +17,7 @@ class C extends Component<WithFindListings> {
             hoverable={true}
             style={{ width: 240 }}
             cover={
-              <img
-                alt="example"
-                src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-              />
+              l.pictureUrl && <img alt="listing-image" src={l.pictureUrl} />
             }
           >
             <Meta title={l.name} description="www.instagram.com" />
