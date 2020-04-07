@@ -1,7 +1,5 @@
 import * as React from "react";
-
-import { Formik, Field } from "formik";
-
+import { Formik, Field, FormikActions } from "formik";
 import { withCreateListing, WithCreateListing } from "@airbnb/controller";
 import { RouteComponentProps } from "react-router-native";
 import {
@@ -11,9 +9,13 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import { InputField } from "../../shared/InputField";
+
 import { Button } from "react-native-elements";
+
+import { InputField } from "../../shared/InputField";
+
 import { CheckBoxGroupField } from "../../shared/CheckBoxGroupField";
+import { PictureField } from "../../shared/PictureField";
 
 interface FormValues {
   picture: null;
@@ -32,12 +34,18 @@ class C extends React.PureComponent<
   RouteComponentProps<{}> & WithCreateListing
 > {
   submit = async (
-    values: FormValues
-    // { setSubmitting }: FormikActions<FormValues>
+    { price, beds, guests, latitude, longitude, ...values }: FormValues,
+    { setSubmitting }: FormikActions<FormValues>
   ) => {
-    console.log(values);
-    // await this.props.createListing(values);
-    // setSubmitting(false);
+    await this.props.createListing({
+      ...values,
+      price: parseInt(price, 10),
+      beds: parseInt(beds, 10),
+      guests: parseInt(guests, 10),
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude),
+    });
+    setSubmitting(false);
   };
 
   render() {
@@ -58,12 +66,16 @@ class C extends React.PureComponent<
         onSubmit={this.submit}
       >
         {({ handleSubmit, isSubmitting, values }) => {
+          console.log(values);
           return (
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : "height"}
               style={{ flex: 1, justifyContent: "center" }}
             >
-              <ScrollView style={{ padding: 20, marginTop: 20 }}>
+              <ScrollView
+                keyboardShouldPersistTaps="handled"
+                style={{ padding: 20, marginTop: 20 }}
+              >
                 <Text style={{ fontSize: 30, marginBottom: 10 }}>
                   Create Listing
                 </Text>
@@ -73,6 +85,12 @@ class C extends React.PureComponent<
                   name="name"
                   placeholder="Name"
                   component={InputField}
+                />
+                <Field
+                  containerStyle={{ width: "100%", marginTop: 2 }}
+                  name="picture"
+                  title="pick a picture"
+                  component={PictureField}
                 />
                 <Field
                   containerStyle={{ width: "102%", padding: "3%" }}
