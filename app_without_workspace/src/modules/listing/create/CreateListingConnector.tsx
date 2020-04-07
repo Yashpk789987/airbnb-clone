@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { InputField } from "../../shared/InputField";
 import { Button } from "react-native-elements";
+import { CheckBoxGroupField } from "../../shared/CheckBoxGroupField";
 
 interface FormValues {
   picture: null;
@@ -57,7 +58,6 @@ class C extends React.PureComponent<
         onSubmit={this.submit}
       >
         {({ handleSubmit, isSubmitting, values }) => {
-          console.log(values);
           return (
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -132,13 +132,12 @@ class C extends React.PureComponent<
                   keyboardType="numeric"
                 />
 
-                {/* <Field
-                  containerStyle={{ width: "102%" }}
-                  style={{ width: "100%" }}
+                <Field
+                  containerStyle={{ width: "102%", padding: "3%" }}
                   name="amenities"
-                  placeholder="Amenities"
-                  component={TagField}
-                /> */}
+                  options={["pool", "basketball court", "soccer field", "yard"]}
+                  component={CheckBoxGroupField}
+                />
 
                 <View
                   style={{
