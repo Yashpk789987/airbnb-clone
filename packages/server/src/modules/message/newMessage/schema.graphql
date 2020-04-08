@@ -5,5 +5,5 @@ type Message {
 }
 
 type Subscription {
-  newMessage: Message!
+  newMessage(listingId: String!): Message!
 }
