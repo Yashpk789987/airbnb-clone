@@ -16,5 +16,8 @@
   "name": "airbnb",
   "devDependencies": {
     "lerna": "^3.20.2"
+  },
+  "resolutions": {
+    "graphql": "^0.13.1"
   }
 }
