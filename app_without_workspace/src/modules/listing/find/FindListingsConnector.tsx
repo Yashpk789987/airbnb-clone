@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { withFindListings, WithFindListings } from "@airbnb/controller";
-import { Text, Card, Icon, Button } from "react-native-elements";
+import { Text, Card } from "react-native-elements";
 import { ScrollView } from "react-native";
 
 class C extends Component<WithFindListings> {
