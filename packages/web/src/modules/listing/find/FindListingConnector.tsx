@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card } from "antd";
 import { withFindListings, WithFindListings } from "@airbnb/controller";
+import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
@@ -20,7 +21,9 @@ class C extends Component<WithFindListings> {
               l.pictureUrl && <img alt="listing-image" src={l.pictureUrl} />
             }
           >
-            <Meta title={l.name} description={l.owner.email} />
+            <Link to={`listing/${l.id}`}>
+              <Meta title={l.name} description={l.owner.email} />
+            </Link>
           </Card>
         ))}
       </div>
