@@ -12,6 +12,7 @@ import { FindListingConnector } from "../modules/listing/find/FindListingConnect
 import { Logout } from "../modules/logout";
 
 import { ViewListingConnector } from "../modules/listing/view/ViewListingConnector";
+import { MessageConnector } from "../modules/listing/messages/MessagesConnector";
 
 export const Routes = () => (
   <BrowserRouter>
@@ -30,7 +31,12 @@ export const Routes = () => (
       />
       <Route path="/m" component={TextPage} />
       <Route path="/listings" component={FindListingConnector} />
-      <Route path="/listing/:listingId" component={ViewListingConnector} />
+      <Route
+        exact={true}
+        path="/listing/:listingId"
+        component={ViewListingConnector}
+      />
+      <Route path="/listing/:listingId/chat" component={MessageConnector} />
       <Route path="/logout" component={Logout} />
       <AuthRoute
         {...{ path: "/create-listing", component: CreateListingConnector }}
