@@ -8,6 +8,7 @@ export class MessageConnector extends React.PureComponent<
     listingId: string;
   }>
 > {
+  unsubscribe!: () => void;
   render() {
     const {
       match: {
@@ -16,10 +17,14 @@ export class MessageConnector extends React.PureComponent<
     } = this.props;
     return (
       <ViewMessages listingId={listingId}>
-        {({ loading, messages }) => {
+        {({ loading, messages, subscribe }) => {
           console.log(messages);
           if (loading) {
             return <div>...loading</div>;
+          }
+
+          if (!this.unsubscribe) {
+            this.unsubscribe = subscribe();
           }
 
           if (messages === null) {
@@ -32,6 +37,7 @@ export class MessageConnector extends React.PureComponent<
                 <div key={`${i}-lm`}>{m.text}</div>
               ))}
               <InputBar listingId={listingId} />
+              <button onClick={this.unsubscribe}>Unsubscribe</button>
             </div>
           );
         }}

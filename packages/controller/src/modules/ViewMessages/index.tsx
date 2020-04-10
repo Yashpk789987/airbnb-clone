@@ -4,8 +4,8 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import {
   ViewMessagesQuery_messages,
-  ViewMessagesQuery,
   ViewMessagesQueryVariables,
+  ViewMessagesQuery,
 } from "./__generated__/ViewMessagesQuery";
 
 export const viewMessagesQuery = gql`
@@ -21,9 +21,23 @@ export const viewMessagesQuery = gql`
   }
 `;
 
+export const newMessageSubscription = gql`
+  subscription($listingId: String!) {
+    newMessage(listingId: $listingId) {
+      text
+      user {
+        id
+        email
+      }
+      listingId
+    }
+  }
+`;
+
 export interface WithViewMessages {
-  messages: ViewMessagesQuery_messages[] | null;
+  messages: ViewMessagesQuery_messages[];
   loading: boolean;
+  subscribe: () => () => void;
 }
 
 interface Props {
@@ -39,7 +53,7 @@ export class ViewMessages extends React.PureComponent<Props> {
         query={viewMessagesQuery}
         variables={{ listingId }}
       >
-        {({ data, loading }) => {
+        {({ data, loading, subscribeToMore }) => {
           let messages: ViewMessagesQuery_messages[] = [];
 
           if (data && data.messages) {
@@ -49,7 +63,26 @@ export class ViewMessages extends React.PureComponent<Props> {
           return children({
             messages,
             loading,
-          } as any);
+            subscribe: () =>
+              subscribeToMore({
+                document: newMessageSubscription,
+                variables: { listingId },
+                updateQuery: (prev, { subscriptionData }) => {
+                  if (!subscriptionData.data) {
+                    return prev;
+                  }
+
+                  // update prev with new data
+                  return {
+                    ...prev,
+                    messages: [
+                      ...prev.messages,
+                      (subscriptionData.data as any).newMessage,
+                    ],
+                  };
+                },
+              }),
+          });
         }}
       </Query>
     );
