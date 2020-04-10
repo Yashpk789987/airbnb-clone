@@ -4,7 +4,7 @@ import gql from "graphql-tag";
 import { graphql } from "react-apollo";
 import {
   CreateListingMutation,
-  CreateListingMutationVariables
+  CreateListingMutationVariables,
 } from "./__generated__/CreateListingMutation";
 
 export const createListingMutation = gql`
@@ -54,6 +54,6 @@ export const withCreateListing = graphql<
       }
       const response = await mutate({ variables });
       console.log(response);
-    }
-  })
+    },
+  }),
 }) as any;
