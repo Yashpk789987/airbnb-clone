@@ -1,26 +1,12 @@
 import * as React from "react";
 
 import { Field } from "formik";
-import { InputField } from "../../../../modules/shared/InputField";
 import { TagField } from "../../../../modules/shared/TagField";
+import { LocationField } from "../../../../modules/shared/LocationField";
 
 export const Page3 = () => (
   <React.Fragment>
-    <Field
-      name="latitude"
-      label="Latitude"
-      placeholder="Latitude"
-      component={InputField}
-      useNumberComponent={true}
-    />
-
-    <Field
-      name="longitude"
-      label="Longitude"
-      placeholder="Longitude"
-      component={InputField}
-      useNumberComponent={true}
-    />
+    <Field name="tmp" component={LocationField} />
 
     <Field
       style={{ width: "100%" }}
