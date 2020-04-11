@@ -13,10 +13,6 @@ input CreateListingInput {
   amenities: [String!]!
 }
 
-# type Listing  {
-
-# }
-
 type Mutation {
   createListing(input: CreateListingInput!): Boolean!
 }

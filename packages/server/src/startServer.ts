@@ -14,10 +14,11 @@ import { redis } from "./redis";
 import { createTypeormConn } from "./utils/createTypeormConn";
 import { confirmEmail } from "./routes/confirmEmail";
 import { genSchema } from "./utils/genSchema";
-import { redisSessionPrefix } from "./constants";
+import { redisSessionPrefix, listingCacheKey } from "./constants";
 import { createTestConn } from "./testUtils/createTestConn";
 import { applyMiddleware } from "graphql-middleware";
 import { middleware } from "./middleware";
+import { Listing } from "./entity/Listing";
 
 const SESSION_SECRET = "Reactnative@2018";
 const RedisStore = connectRedis(session as any);
@@ -92,9 +93,18 @@ export const startServer = async () => {
   if (process.env.NODE_ENV === "test") {
     await createTestConn(true);
   } else {
-    const conn = await createTypeormConn();
-    await conn.runMigrations();
+    await createTypeormConn();
+    // await conn.runMigrations();
   }
+
+  // clear cache
+  redis.del(listingCacheKey);
+  // fill cache
+  const listings = await Listing.find();
+  const listingStrings = listings.map((l) => JSON.stringify(l));
+  await redis.lpush(listingCacheKey, ...listingStrings);
+  // console.log(await redis.lrange(listingCacheKey, 0, -1));
+
   const port = process.env.PORT || 4000;
   const app = await server.start({
     cors,
