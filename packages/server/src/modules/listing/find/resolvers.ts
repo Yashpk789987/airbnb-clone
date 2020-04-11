@@ -1,6 +1,6 @@
 import { ResolverMap } from "../../../types/graphql-utils";
 import { listingCacheKey } from "../../../constants";
-import { Listing } from "../../../entity/Listing";
+// import { Listing } from "../../../entity/Listing";
 
 export const resolvers: ResolverMap = {
   Listing: {
@@ -12,13 +12,16 @@ export const resolvers: ResolverMap = {
   },
   Query: {
     findListings: async (_, __, { redis }) => {
-      console.time("redis");
+      // REDIS VS DB SEARCHING PERFORMANCE COMPARISON
+      // console.time("redis");
+      // const listings = (await redis.lrange(listingCacheKey, 0, -1)) || [];
+      // const result = listings.map((x: string) => JSON.parse(x));
+      // console.timeEnd("redis");
+      // console.time("db");
+      // await Listing.find();
+      // console.timeEnd("db");
       const listings = (await redis.lrange(listingCacheKey, 0, -1)) || [];
       const result = listings.map((x: string) => JSON.parse(x));
-      console.timeEnd("redis");
-      console.time("db");
-      await Listing.find();
-      console.timeEnd("db");
       return result;
     },
   },
