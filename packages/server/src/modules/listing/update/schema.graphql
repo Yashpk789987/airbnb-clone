@@ -1,0 +1,17 @@
+input UpdateListingInput {
+  pictureUrl: String
+  picture: Upload
+  name: String
+  category: String
+  description: String
+  price: Int
+  beds: Int
+  guests: Int
+  latitude: Float
+  longitude: Float
+  amenities: [String!]
+}
+
+type Mutation {
+  updateListing(listingId: String!, input: UpdateListingInput!): Boolean!
+}
