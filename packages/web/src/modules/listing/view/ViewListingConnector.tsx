@@ -24,6 +24,8 @@ export class ViewListingConnector extends React.PureComponent<
             <div>
               <div>{data.listing.name}</div>
               <Link to={`/listing/${listingId}/chat`}>chat</Link>
+              <br />
+              <Link to={`/listing/${listingId}/edit`}>edit</Link>
             </div>
           );
         }}

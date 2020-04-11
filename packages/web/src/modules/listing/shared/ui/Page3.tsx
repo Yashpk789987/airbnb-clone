@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import { Field } from "formik";
-import { TagField } from "../../../../modules/shared/TagField";
-import { LocationField } from "../../../../modules/shared/LocationField";
+import { TagField } from "../../../shared/TagField";
+import { LocationField } from "../../../shared/LocationField";
 
 export const Page3 = () => (
   <React.Fragment>
