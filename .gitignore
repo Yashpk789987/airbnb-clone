@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 node_modules/
+mock.sql
 build/
 temp/
 *.log
