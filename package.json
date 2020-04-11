@@ -19,8 +19,5 @@
   },
   "resolutions": {
     "graphql": "^0.13.1"
-  },
-  "engines": {
-    "vscode": "^1.22.0"
   }
 }
