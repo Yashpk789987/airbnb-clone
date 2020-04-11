@@ -14,6 +14,13 @@ export interface ViewListingQuery_viewListing {
   id: string;
   name: string;
   category: string;
+  description: string;
+  price: number;
+  beds: number;
+  guests: number;
+  longitude: number;
+  latitude: number;
+  amenities: string[];
   pictureUrl: string;
   owner: ViewListingQuery_viewListing_owner;
 }

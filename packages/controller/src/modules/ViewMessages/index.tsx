@@ -22,7 +22,7 @@ export const viewMessagesQuery = gql`
 `;
 
 export const newMessageSubscription = gql`
-  subscription($listingId: String!) {
+  subscription newMessageSubscription($listingId: String!) {
     newMessage(listingId: $listingId) {
       text
       user {

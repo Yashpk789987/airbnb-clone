@@ -5,7 +5,6 @@ export interface MessageInput {
   text: string;
   listingId: string;
 }
-
 // ====================================================
 // GraphQL mutation operation: CreateMessageMutation
 // ====================================================

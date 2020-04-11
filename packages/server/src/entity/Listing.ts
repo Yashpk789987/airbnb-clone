@@ -23,6 +23,8 @@ export class Listing extends BaseEntity {
   @Column("varchar", { length: 255 })
   description: string;
 
+  @Column({ type: "int", default: 0 }) price: number;
+
   @Column("int") beds: number;
 
   @Column("int") guests: number;
