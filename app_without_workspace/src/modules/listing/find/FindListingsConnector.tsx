@@ -1,46 +1,102 @@
 import React from "react";
 
-import { Text, Card } from "react-native-elements";
-import { ScrollView, TextInput, View } from "react-native";
+import { Text, Card, SearchBar } from "react-native-elements";
+import { ScrollView, View, Slider, StatusBar, FlatList } from "react-native";
 import { SearchListing } from "@airbnb/controller";
 
 interface State {
   name: string;
+  guests: number;
+  beds: number;
+  loading: boolean;
 }
 
 export class FindListingsConnector extends React.PureComponent<{}, State> {
   state = {
     name: "",
+    guests: 1,
+    beds: 1,
+    loading: false,
   };
   render() {
-    const { name } = this.state;
+    const { name, guests, beds, loading } = this.state;
     return (
       <>
-        <View style={{ marginTop: 30 }}>
-          <TextInput
-            style={{ fontSize: 20, width: "100%" }}
+        <StatusBar />
+        <View>
+          <SearchBar
+            showLoading={loading}
             placeholder="search..."
             onChangeText={(text) => this.setState({ name: text })}
             value={name}
           />
-          <SearchListing
-            variables={{ input: { beds: 1, name }, limit: 5, offset: 0 }}
+          <View
+            style={{
+              marginTop: "8%",
+              alignItems: "stretch",
+              justifyContent: "center",
+            }}
           >
-            {({ listings }) => (
-              <ScrollView style={{ marginTop: 15 }}>
-                {listings.map((l) => (
-                  <Card
-                    key={`${l.id}-flc`}
-                    title={l.name}
-                    image={l.pictureUrl ? { uri: l.pictureUrl } : undefined}
-                  >
-                    <Text style={{ marginBottom: 10 }}>
-                      Owner: {l.owner.email}
-                    </Text>
-                  </Card>
-                ))}
-              </ScrollView>
-            )}
+            <Slider
+              value={guests}
+              onValueChange={(value) => this.setState({ guests: value })}
+              step={1}
+              maximumValue={5}
+            />
+            <Text style={{ paddingLeft: "3%" }}>Guests: {guests}</Text>
+          </View>
+          <View
+            style={{
+              marginTop: "2%",
+              alignItems: "stretch",
+              justifyContent: "center",
+            }}
+          >
+            <Slider
+              value={beds}
+              onValueChange={(value) => this.setState({ beds: value })}
+              step={1}
+              maximumValue={5}
+            />
+            <Text style={{ paddingLeft: "3%" }}>Beds: {beds}</Text>
+          </View>
+          <SearchListing
+            variables={{
+              input: { beds, name, guests },
+              limit: 5,
+              offset: 0,
+            }}
+          >
+            {({ listings, loading }) => {
+              this.setState({ loading });
+              return (
+                <FlatList
+                  ListFooterComponent={() => (
+                    <View>
+                      <Text>Footer</Text>
+                    </View>
+                  )}
+                  contentContainerStyle={{
+                    marginTop: "3%",
+                    paddingBottom: "50%",
+                  }}
+                  data={listings}
+                  keyExtractor={({ id }) => `${id}-flc`}
+                  renderItem={({ item }) => (
+                    <Card
+                      title={item.name}
+                      image={
+                        item.pictureUrl ? { uri: item.pictureUrl } : undefined
+                      }
+                    >
+                      <Text style={{ marginBottom: 10 }}>
+                        Owner: {item.owner.email}
+                      </Text>
+                    </Card>
+                  )}
+                />
+              );
+            }}
           </SearchListing>
         </View>
       </>
