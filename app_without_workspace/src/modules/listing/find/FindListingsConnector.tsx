@@ -21,8 +21,8 @@ interface State {
 export class FindListingsConnector extends React.PureComponent<{}, State> {
   state = {
     name: "",
-    guests: 1,
-    beds: 1,
+    guests: 0,
+    beds: 0,
     loading: false,
   };
   render() {
@@ -30,92 +30,91 @@ export class FindListingsConnector extends React.PureComponent<{}, State> {
     return (
       <>
         <StatusBar />
-        <View>
-          <SearchBar
-            showLoading={loading}
-            placeholder="search..."
-            onChangeText={(text) => this.setState({ name: text })}
-            value={name}
+        <SearchBar
+          lightTheme={true}
+          showLoading={loading}
+          placeholder="search..."
+          onChangeText={(text) => this.setState({ name: text })}
+          value={name}
+        />
+        <View
+          style={{
+            marginTop: "8%",
+            alignItems: "stretch",
+            justifyContent: "center",
+          }}
+        >
+          <Slider
+            value={guests}
+            onValueChange={(value) => this.setState({ guests: value })}
+            step={1}
+            maximumValue={5}
           />
-          <View
-            style={{
-              marginTop: "8%",
-              alignItems: "stretch",
-              justifyContent: "center",
-            }}
-          >
-            <Slider
-              value={guests}
-              onValueChange={(value) => this.setState({ guests: value })}
-              step={1}
-              maximumValue={5}
-            />
-            <Text style={{ paddingLeft: "3%" }}>Guests: {guests}</Text>
-          </View>
-          <View
-            style={{
-              marginTop: "2%",
-              alignItems: "stretch",
-              justifyContent: "center",
-            }}
-          >
-            <Slider
-              value={beds}
-              onValueChange={(value) => this.setState({ beds: value })}
-              step={1}
-              maximumValue={5}
-            />
-            <Text style={{ paddingLeft: "3%" }}>Beds: {beds}</Text>
-          </View>
-          <SearchListing
-            variables={{
-              input: { beds, name, guests },
-              limit: 5,
-              offset: 0,
-            }}
-          >
-            {({ listings, loading, hasMoreListings, loadMore }) => {
-              this.setState({ loading });
-              return (
-                <FlatList
-                  ListFooterComponent={() =>
-                    hasMoreListings ? (
-                      <ActivityIndicator
-                        style={{
-                          marginTop: 10,
-                        }}
-                      />
-                    ) : (
-                      <View />
-                    )
-                  }
-                  onEndReached={() => {
-                    console.log("End Reached...Loading More Data");
-                    loadMore();
-                  }}
-                  contentContainerStyle={{
-                    marginTop: "3%",
-                    paddingBottom: "50%",
-                  }}
-                  data={listings}
-                  keyExtractor={({ id }) => `${id}-flc`}
-                  renderItem={({ item }) => (
-                    <Card
-                      title={item.name}
-                      image={
-                        item.pictureUrl ? { uri: item.pictureUrl } : undefined
-                      }
-                    >
-                      <Text style={{ marginBottom: 10 }}>
-                        Owner: {item.owner.email}
-                      </Text>
-                    </Card>
-                  )}
-                />
-              );
-            }}
-          </SearchListing>
+          <Text style={{ paddingLeft: "3%" }}>Guests: {guests}</Text>
         </View>
+        <View
+          style={{
+            marginTop: "2%",
+            alignItems: "stretch",
+            justifyContent: "center",
+          }}
+        >
+          <Slider
+            value={beds}
+            onValueChange={(value) => this.setState({ beds: value })}
+            step={1}
+            maximumValue={5}
+          />
+          <Text style={{ paddingLeft: "3%" }}>Beds: {beds}</Text>
+        </View>
+        <SearchListing
+          variables={{
+            input: { beds, name, guests },
+            limit: 5,
+            offset: 0,
+          }}
+        >
+          {({ listings, loading, hasMoreListings, loadMore }) => {
+            this.setState({ loading });
+            return (
+              <FlatList
+                ListFooterComponent={() =>
+                  hasMoreListings ? (
+                    <ActivityIndicator
+                      style={{
+                        marginTop: 10,
+                      }}
+                    />
+                  ) : (
+                    <View />
+                  )
+                }
+                onEndReached={() => {
+                  console.log("End Reached...Loading More Data");
+                  loadMore();
+                }}
+                contentContainerStyle={{
+                  marginTop: "3%",
+                  paddingBottom: "50%",
+                }}
+                data={listings}
+                keyExtractor={({ id }) => `${id}-flc`}
+                renderItem={({ item }) => (
+                  <Card
+                    title={item.name}
+                    image={
+                      item.pictureUrl ? { uri: item.pictureUrl } : undefined
+                    }
+                  >
+                    <Text style={{ marginBottom: 10 }}>
+                      Owner: {item.owner.email}
+                    </Text>
+                  </Card>
+                )}
+              />
+            );
+          }}
+        </SearchListing>
       </>
     );
   }
