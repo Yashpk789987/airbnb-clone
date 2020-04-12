@@ -21,7 +21,7 @@ export interface ViewListingQuery_viewListing {
   longitude: number;
   latitude: number;
   amenities: string[];
-  pictureUrl: string;
+  pictureUrl: string | null;
   owner: ViewListingQuery_viewListing_owner;
 }
 
