@@ -6,6 +6,7 @@ import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 
 console.log(process.env.REACT_APP_SERVER_URL);
+console.log(process.env.REACT_APP_SOCKET_URL);
 
 const httpLink = createUploadLink({
   uri: process.env.REACT_APP_SERVER_URL,
@@ -14,7 +15,7 @@ const httpLink = createUploadLink({
 
 // Create a WebSocket link:
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/`,
+  uri: process.env.REACT_APP_SOCKET_URL as string,
   options: {
     reconnect: true,
   },

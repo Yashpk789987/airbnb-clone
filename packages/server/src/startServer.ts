@@ -80,7 +80,7 @@ export const startServer = async () => {
   );
 
   server.express.use("/images", express.static("images"));
-
+  console.log("frontend", process.env.FRONTEND_HOST);
   const cors = {
     credentials: true,
     origin:
@@ -90,6 +90,9 @@ export const startServer = async () => {
   };
 
   server.express.get("/confirm/:id", confirmEmail);
+
+  server.express.set("trust proxy", 1); // For Cookies Working
+
   if (process.env.NODE_ENV === "test") {
     await createTestConn(true);
   } else {
@@ -102,8 +105,9 @@ export const startServer = async () => {
   // fill cache
   const listings = await Listing.find();
   const listingStrings = listings.map((l) => JSON.stringify(l));
+  console.log("Before L Push");
   await redis.lpush(listingCacheKey, ...listingStrings);
-  // console.log(await redis.lrange(listingCacheKey, 0, -1));
+  console.log("After L Push");
 
   const port = process.env.PORT || 4000;
   const app = await server.start({
