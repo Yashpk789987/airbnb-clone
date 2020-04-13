@@ -106,7 +106,13 @@ export const startServer = async () => {
   const listings = await Listing.find();
   const listingStrings = listings.map((l) => JSON.stringify(l));
   console.log("Before L Push");
-  await redis.lpush(listingCacheKey, ...listingStrings);
+  try {
+    await redis.lpush(listingCacheKey, ...listingStrings);
+  } catch (error) {
+    console.log("starting server and booting redis cache error::", error);
+    console.log("This Error is there because listings is empty in database");
+    await redis.lpush(listingCacheKey, []);
+  }
   console.log("After L Push");
 
   const port = process.env.PORT || 4000;
